@@ -1,0 +1,59 @@
+<div class="container color-dark">
+	<div class="col">
+		<p>Add a Name list Item</p>
+	</div>
+	<div class="col">
+		<p>Your Name List ({{itemCount}})</p>
+	</div>
+</div>
+<div class="container color-light">
+	<div class="col">
+		<form #personForm="ngForm">
+			<!--<input type="text" class="txt" name="id" placeholder="Enter Your Id" [(ngModel)]="person.id">-->
+			<input type="text" class="txt" id="name" name="name" required placeholder="Enter Your Name" [(ngModel)]="person.name" #name="ngModel">
+			<input type="text" class="txt" id="mobile" name="mobile" required placeholder="Enter Your Mobile" [(ngModel)]="person.mobile" #mobile="ngModel">
+			<input type="text" class="txt" id="email" name="email" placeholder="Enter Your Email" [(ngModel)]="person.email" #email="ngModel">
+			<button type="submit" class="btn" [disabled]="personForm.invalid" (click)="mode==='Add'?addPerson(person):updatePerson();">{{btnTxt}}</button>
+			<input type="reset" class="btn" value="Clear" (click)="personObj = {}; btnTxt = 'Add';">
+		</form>
+	</div>
+
+	<div class="col">
+		<div id="search-component">
+			<!--<select (change)="selectPerson(persons[j]);">
+				<option>Select</option>
+      			<option *ngFor="let person of persons; let j = index;">{{person.name}}</option>
+   			</select>-->
+ 			<input id="search-box" (keyup.enter)="searchPersons(personName);" [(ngModel)]="personName" />
+ 			<button (click)="searchPersons(personName);">
+    Search
+  </button>
+  <button (click)="personName = ''; searchPersons(personName);">
+    Clear
+  </button>
+	</div>
+	<br />
+		<table width="100%" border="1">
+			<thead>
+				<th>Id</th>
+				<th>Name</th>
+				<th>Mobile</th>
+				<th>Email</th>
+				<th colspan="2">Action</th>
+			</thead>
+			<tbody>
+			<tr *ngFor="let person of persons; let i = index;">
+				<td>{{person.id}}</td>
+				<td>{{person.name | titlecase}}</td>
+				<td>{{person.mobile}}</td>
+				<td>{{person.email}}</td>
+				<td class="action" (click)="getPerson(person);">Edit</td>
+				<td class="action" (click)="deletePerson(person);">Delete</td>
+			</tr>
+			<tr *ngIf="itemCount === 0">
+				<td colspan="6"><span class="error">No results found</span></td>
+			</tr>
+		</tbody>
+		</table>
+	</div>
+</div>
